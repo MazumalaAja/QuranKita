@@ -1,7 +1,6 @@
 // import { useLoaderData } from "react-router-dom"
 import { NavLink, useNavigate, useParams } from "react-router-dom"
 import { useDetailSurat, useSurat } from "../hooks"
-import Links from "../components/navigations/navLink"
 import { AnimateOnScroll } from "../../libs/aos"
 import { useState } from "react"
 
@@ -12,13 +11,26 @@ export default function AlQuran() {
           tempatTurun: "Mekah",
           arti: "Pembukaan"
      })
+     const [audioFull, setAudioFull] = useState(
+          {
+               "01": "https://cdn.equran.id/audio-full/Abdullah-Al-Juhany/001.mp3",
+               "02": "https://cdn.equran.id/audio-full/Abdul-Muhsin-Al-Qasim/001.mp3",
+               "03": "https://cdn.equran.id/audio-full/Abdurrahman-as-Sudais/001.mp3",
+               "04": "https://cdn.equran.id/audio-full/Ibrahim-Al-Dossari/001.mp3",
+               "05": "https://cdn.equran.id/audio-full/Misyari-Rasyid-Al-Afasi/001.mp3",
+               "06": "https://cdn.equran.id/audio-full/Yasser-Al-Dosari/001.mp3"
+          });
      const { data: suratList } = useSurat()
      const { data: suratDetail } = useDetailSurat(nomor)
      const navigate = useNavigate()
+     const [open, setOpen] = useState({
+          translate: false,
+     })
 
      function arabic(data) {
           return data.toLocaleString('ar-Eg')
      }
+
      // const data = useLoaderData()
      return (
           <>
@@ -60,26 +72,41 @@ export default function AlQuran() {
                </AnimateOnScroll>
 
                <main id="quran" className="fixed flex gap-3 flex-col items-end p-5 overflow-auto top-[8.4%]  right-0 bottom-0 w-[calc(100%-18rem)] bg-gray-950/80 backdrop-blur-sm">
+                    <div onClick={() => setOpen(prev => ({ ...prev, translate: !open.translate }))} style={{ fontFamily: "Montserrat" }} className={`rounded-full items-center px-5 py-1 outline flex active:scale-95  gap-3  cursor-pointer ${open.translate ? `bg-green-600/10 text-green-300 duration-200  outline-green-300/30` : `bg-indigo-600/10 text-indigo-300 outline-indigo-300/30`}`}>
+                         <i className={`bi bi-${open.translate ? `globe` : `globe2`}`}></i>
+                         <span>Terjemah</span>
+                    </div>
                     <div className="flex flex-col items-center gap-2 w-full mb-3">
                          <h1 style={{ fontFamily: "Montserrat" }} className="text-3xl text-indigo-100 font-medium text-start">Surat : {surat.namaLatin}</h1>
                          <div className="flex gap-3 items-center">
                               <span style={{ fontFamily: "Montserrat" }} className="text-indigo-300 bg-indigo-600/10 px-6 rounded-full py-1 outline-1 outline-indigo-300">Tempat turun : {surat.tempatTurun}</span><span style={{ fontFamily: "Montserrat" }} className="text-green-300 bg-green-600/10 px-6 rounded-full py-1 outline-1 outline-green-300">Arti Surat : {surat.arti}</span>
                          </div>
                     </div>
+
+                    {/* ==== Audio ini ===== */}
+                    <div>
+                         <audio controls>
+                              <source src="https://cdn.equran.id/audio-full/Yasser-Al-Dosari/001.mp3" />
+                         </audio>
+                    </div>
                     {
                          suratDetail?.ayat.map((v, i) => (
                               <div className="text-indigo-100 backdrop-blur-sm w-full rounded-md text-end p-3 bg-gray-700/50" key={v.nomor}>
                                    <div className="text-3xl p-5 leading-loose flex gap-2 ring-1 ring-indigo-300/20 rounded-md">
                                         <span className=" flex flex-1 self-start">{arabic(v.nomorAyat)}</span>
-                                        <div className="flex flex-col gap-5">
+                                        <div className="flex flex-col gap-5 duration-200">
                                              <span className="flex-4">{v.teksArab}</span>
                                              <small style={{ fontFamily: "Montserrat" }} className="bg-green-600/10 text-green-300 px-4 rounded-md outline outline-green-300/50 text-[0.9rem]">{v.teksLatin}</small>
+
+                                             {open.translate && <small style={{ fontFamily: "Montserrat" }} className="bg-indigo-600/10 text-indigo-300 py-1.5 px-4 rounded-md text-start outline outline-green-300/50 text-base">{v.teksIndonesia}</small>}
+
                                         </div>
                                    </div>
+
                               </div>
                          ))
                     }
-               </main>
+               </main >
           </>
      )
 }
