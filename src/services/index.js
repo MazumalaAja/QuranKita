@@ -22,4 +22,22 @@ function GetApi(path) {
      };
 }
 
-export { GetApi };
+function GetDetail(path, id) {
+     return async () => {
+          // // 🔴 Delay supaya loading kelihatan
+          // await delay(5000);
+
+          const response = await fetch(`${baseURL}/${path}/${id}`);
+
+          if (!response.ok) {
+               throw new Response("Gagal mengambil data", {
+                    status: response.status,
+               });
+          }
+
+          const result = await response.json();
+          return result.data;
+     };
+}
+
+export { GetApi, GetDetail };

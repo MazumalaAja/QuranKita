@@ -28,7 +28,7 @@ export default function Home() {
 
                     {/* ===== Tombol CTA ===== */}
                     <div data-aos-duration="600" data-aos="fade-up" className="">
-                         <button onClick={() => navigate("quran")} className="bg-indigo-500/10 shadow-md border active:scale-90 border-indigo-200/20 md:text-md lg:text-xl text-indigo-50 backdrop-blur-sm px-8 md:px-10 cursor-pointer hover:bg-indigo-200 hover:text-gray-700 py-2 md:py-3 hover:scale-95 rounded-full flex justify-center items-center gap-3 transition-all duration-300">
+                         <button onClick={() => navigate("quran/1")} className="bg-indigo-500/10 shadow-md border active:scale-90 border-indigo-200/20 md:text-md lg:text-xl text-indigo-50 backdrop-blur-sm px-8 md:px-10 cursor-pointer hover:bg-indigo-200 hover:text-gray-700 py-2 md:py-3 hover:scale-95 rounded-full flex justify-center items-center gap-3 transition-all duration-300">
                               <i className="bi bi-journal"></i>
                               <span className="">Ayo Mulai!</span>
                          </button>
