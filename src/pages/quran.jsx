@@ -24,11 +24,13 @@ export default function AlQuran() {
           qori: false,
      })
 
+     const [qori2, setQori2] = useState("01");
+
      const ustadz = [
           { id: "01", name: "Abdullah-Al-Juhany", url: "https://i.scdn.co/image/ab67616d0000b27341e4021e775036c61be46459" },
           { id: "02", name: "Abdul-Muhsin-Al-Qasim", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Abdul_Mohsin_Al-Qasim.jpg/640px-Abdul_Mohsin_Al-Qasim.jpg" },
           { id: "03", name: "Abdurrahman-as-Sudais", url: "https://assets.promediateknologi.id/crop/0x0:0x0/1200x800/webp/photo/2022/07/25/3092496303.jpg" },
-          { id: "03", name: "Ibrahim-Al-Dossari", url: "https://i.scdn.co/image/ab67616d0000b273a467fa6dbfc5190f35b602fb" },
+          { id: "04", name: "Ibrahim-Al-Dossari", url: "https://i.scdn.co/image/ab67616d0000b273a467fa6dbfc5190f35b602fb" },
           { id: "05", name: "Misyari-Rasyid-Al-Afasi", url: "https://i.pinimg.com/564x/93/08/8b/93088be16e324b36b2d98a12748366a6.jpg" },
           { id: "06", name: "Yasser-Al-Dosari", url: "https://i1.sndcdn.com/artworks-yRdHunkzvtypsKvH-YmPLEA-t500x500.jpg" }
      ]
@@ -37,6 +39,11 @@ export default function AlQuran() {
      function arabic(data) {
           return data.toLocaleString('ar-Eg')
      }
+
+     useEffect(() => {
+          if (!suratDetail) return;
+          setQori(suratDetail.audioFull[qori2]);
+     }, [qori2, suratDetail]);
 
      // const data = useLoaderData()
      return (
@@ -57,7 +64,7 @@ export default function AlQuran() {
                                    suratList?.map((v, i) => (
                                         <button onClick={() => {
                                              navigate(`/quran/${v.nomor}`)
-                                             setQori(v.audioFull["01"])
+                                             setQori(v.audioFull[qori2])
                                              setSurat({ namaLatin: v.namaLatin, tempatTurun: v.tempatTurun, arti: v.arti })
                                         }} key={v.nomor} data-aos-duration={`${i + 1}00`} data-aos={`fade-up`} data-aos-anchor="#judul-daftar" className={` active:scale-95 text-start cursor-pointer hover:outline-1 hover:outline-indigo-400 duration-200 text-indigo-100 items-center flex justify-between  bg-gray-500/50 backdrop-blur-sm p-2 px-4 rounded-md`}>
                                              <div>
@@ -79,7 +86,18 @@ export default function AlQuran() {
                     </aside>
                </AnimateOnScroll>
 
-               <main id="quran" className="fixed flex gap-3 flex-col items-end p-5 overflow-auto top-[8.4%]  right-0 bottom-0 w-[calc(100%-18rem)] bg-gray-950/80 backdrop-blur-sm">
+               {open.qori && <div onClick={() => setOpen(prev => ({ ...prev, qori: !open.qori }))} className="fixed inset-0  bg-black/20 backdrop-blur-md z-999999 duration-200 flex justify-center items-center p-5 ">
+                    <ul className="flex flex-wrap gap-4 justify-center">
+                         {ustadz.map((v, i) => (
+                              <li onClick={() => setQori2(prev => prev = v.id)} key={v.id} className={`text-center space-y-2 text-indigo-100`} style={{ fontFamily: "Montserrat" }}>
+                                   <img className={`w-full h-full  hover:ring-2 hover:ring-indigo-300 ${qori2 == v.id ? `ring-offset-3 ring-indigo-300 ring-2 scale-100` : `not-hover:saturate-50 not-hover:scale-95`} ring-offset-gray-900 hover:ring-offset-3 max-w-64 max-h-64 rounded-md active:scale-95 duration-75 cursor-pointer`} src={`${v.url}`} alt="" />
+                                   <span>{v.name}</span>
+                              </li>
+                         ))}
+                    </ul>
+               </div>}
+
+               <main id="quran" className="fixed  flex gap-3 flex-col items-end p-5 overflow-auto top-[8.4%]  right-0 bottom-0 w-[calc(100%-18rem)] bg-gray-950/80 backdrop-blur-sm">
                     <div className="flex gap-3">
                          <div onClick={() => setOpen(prev => ({ ...prev, translate: !open.translate }))} style={{ fontFamily: "Montserrat" }} className={`rounded-full items-center px-5 py-1 outline flex active:scale-95  gap-3  cursor-pointer ${open.translate ? `bg-green-600/10 text-green-300 duration-200  outline-green-300/30` : `bg-indigo-600/10 text-indigo-300 outline-indigo-300/30`}`}>
                               <i className={`bi bi-${open.translate ? `globe` : `globe2`}`}></i>
@@ -91,15 +109,7 @@ export default function AlQuran() {
                          </div>
                     </div>
 
-                    <div>
-                         <ul>
-                              {ustadz.map((v, i) => (
-                                   <li key={v.id}>
-                                        <span>{v.name}</span>
-                                   </li>
-                              ))}
-                         </ul>
-                    </div>
+
 
                     <div className="flex flex-col items-center gap-2 w-full mb-3">
                          <h1 style={{ fontFamily: "Montserrat" }} className="text-3xl text-indigo-100 font-medium text-start">Surat : {surat.namaLatin}</h1>
