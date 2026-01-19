@@ -1,3 +1,8 @@
 @import "tailwindcss";
 
+.audio-btn {
+     font-family: "Montserrat";
+     @apply bg-indigo-500/10 text-indigo-300 px-3 py-1 rounded-full text-xl outline outline-indigo-300 active:scale-95 cursor-pointer;
+}
+ 
 
