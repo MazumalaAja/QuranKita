@@ -38,7 +38,7 @@ export default function HomePage() {
                     {
                          data.map((v, i) => (
                               <div className="transition-all duration-300 w-full sm:w-100  hover:translate-y-[-3%]" key={i}>
-                                   <div data-aos-duration={`${i + 6}00`} data-aos="fade-up" className="bg-gray-500/10 shadow-md  cursor-pointer space-y-2 backdrop-blur-sm w-full text-gray-100 text-center  p-3 border border-gray-200/20 rounded-lg">
+                                   <div className="bg-gray-500/10 shadow-md  cursor-pointer space-y-2 backdrop-blur-sm w-full text-gray-100 text-center  p-3 border border-gray-200/20 rounded-lg">
                                         <i className={`${v.icon} block max-w-max mx-auto text-3xl md:text-4xl bg-gray-300/20 px-4 py-2 rounded-md`}></i>
                                         <h2 className="text-md md:text-xl font-medium">{v.title}</h2>
                                         <small className="text-gray-300/60">{v.text}</small>

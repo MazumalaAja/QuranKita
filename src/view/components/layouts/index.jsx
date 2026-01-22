@@ -5,7 +5,7 @@ import Navbar from "../navigations";
 // ===== Code =====
 export default function LayoutPage() {
      return (
-          <div id="layout" className="w-full min-h-screen  bg-gray-900">
+          <div className="bg-main w-full min-h-screen  bg-gray-900">
                {/* ===== Navigation ===== */}
                <Navbar />
 

@@ -3,7 +3,7 @@
 
 /* ===== Code ===== */
 .navbar {
-     @apply fixed z-999 top-0 left-0 border-b-2 border-b-gray-400/30 right-0 p-3 bg-gray-900/10 backdrop-blur-sm text-gray-100 flex justify-between px-4
+     @apply fixed z-999 top-0 left-0 border-b-2 border-b-gray-400/30 right-0 p-3 bg-gray-900/10 backdrop-blur-sm text-gray-100 flex flex-col gap-5 md:flex-row justify-between px-4
 }
 
 .navbar {
