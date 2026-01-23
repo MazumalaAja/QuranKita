@@ -22,11 +22,17 @@ export default function KontakPage() {
           setBioData({ name: "", nomor: "", email: "", pesan: "" })
           window.open(url, '_blank');
      }
+
+     // ===== Navigation data =====
+     const navigation = [
+          { label: "Home", icon: "house", to: "/" },
+          { label: "Kontak Saya", icon: "telephone", to: "/kontak" },
+     ]
      return (
           <>
                <div className="w-full flex-col py-24 p-1 gap-4 flex justify-center items-center min-h-screen bg-main">
                     {/* ===== Navbar ===== */}
-                    <Navbar />
+                    <Navbar data={navigation} />
 
                     {/* ===== Social Media ===== */}
                     <div className="flex gap-3 flex-wrap justify-center items-center">
@@ -64,7 +70,7 @@ export default function KontakPage() {
                          <Inputs value={bioData.name} onChange={(e) => setBioData(prev => ({ ...prev, name: e.target.value }))} type={"text"} icon={"person"} text={"Masukkan nama anda..."} />
                          <Inputs value={bioData.nomor} onChange={(e) => setBioData(prev => ({ ...prev, nomor: e.target.value }))} type={"number"} icon={"phone"} text={"Masukkan nomor anda..."} />
                          <Inputs value={bioData.email} onChange={(e) => setBioData(prev => ({ ...prev, email: e.target.value }))} type={"email"} icon={"envelope"} text={"Masukkan Email anda..."} />
-                         <textarea value={bioData.pesan} onChange={(e) => setBioData(prev => ({ ...prev, pesan: e.target.value }))} className="text-gray-200 h-40  resize-none rounded-md p-3 border-2 border-gray-500/50" placeholder="Pesan..."></textarea>
+                         <textarea value={bioData.pesan} onChange={(e) => setBioData(prev => ({ ...prev, pesan: e.target.value }))} className="text-gray-200 h-40 focus:outline-0 resize-none rounded-md p-3 border-2 border-gray-500/50" placeholder="Pesan..."></textarea>
 
                          {/* ===== Btn ===== */}
                          <div className="flex flex-col md:flex-row gap-3">

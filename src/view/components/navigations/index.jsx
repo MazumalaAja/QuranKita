@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom"
 import "../../../assets/css/navbar.css"
 
 // ===== Code =====
-export default function Navbar() {
+export default function Navbar({ data }) {
      const [open, setOpen] = useState(false);
      return (
           <header className={`${open ? `h-max` : `h-14`} duration-300 navbar overflow-auto`}>
@@ -24,8 +24,11 @@ export default function Navbar() {
 
                {/* ===== Link ===== */}
                <nav className={`md:flex dura gap-3 overflow-auto`}>
-                    <Links to={`/`} label={`Beranda`} icon={`house`} />
-                    <Links to={`/kontak`} label={`Kontak Saya`} icon={`envelope`} />
+                    {
+                         data.map((v, i) => (
+                              <Links key={i} label={v.label} icon={v.icon} to={v.to} />
+                         ))
+                    }
                </nav>
           </header >
      )
@@ -34,7 +37,7 @@ export default function Navbar() {
 // ===== Links component ====
 function Links({ label, icon, to }) {
      return (
-          <NavLink className={({ isActive }) => `${isActive ? `bg-gray-300/10 text-gray-100 border border-gray-300/30` : `text-gray-400`} flex justify-between md:justify-start item-center hover:text-gray-100 gap-1 py-1 px-4 rounded-md md:rounded-full`} to={to}>
+          <NavLink className={({ isActive }) => `${isActive ? `bg-gray-300/10 text-gray-100 border border-gray-300/30` : `text-gray-400`} flex justify-between md:justify-start gap-2 item-center hover:text-gray-100 gap-1 py-1 px-4 rounded-md md:rounded-full`} to={to}>
                {icon && <i className={`bi bi-${icon}`}></i>}
                <span>{label}</span>
           </NavLink>

@@ -9,9 +9,18 @@ const router = createBrowserRouter([
           path: "/",
           element: <LayoutPage />,
           children: [
-               { index: true, element: <HomePage /> },
-               { path: "al-quran", element: <QuranPage /> },
-               { path: "waktu-sholat", element: <SholatPage /> }
+               {
+                    index: true,
+                    element: <HomePage />
+               },
+               {
+                    path: "al-quran",
+                    element: <QuranPage />
+               },
+               {
+                    path: "waktu-sholat",
+                    element: <SholatPage />
+               }
           ]
      },
      {
