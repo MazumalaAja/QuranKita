@@ -51,7 +51,10 @@ export default function QuranPage() {
                          data.length > 0 ? data.map((v, i) => (
                               <NavLink to={`${v.nomor}`} className={({ isActive }) => `${isActive ? `bg-green-500/50 text-green-200` : `bg-gray-400/30 text-gray-300 `} active:scale-95 duration-150 backdrop-blur-md  text-lg cursor-pointer flex justify-between items-center rounded-sm p-2 text-start`} key={i}>
                                    {!v.error && <small>{i + 1}</small>}
-                                   {!v.error ? <span className="text-center">{v.namaLatin}</span> : <small>{v.namaLatin}</small>}
+                                   {!v.error ? <div className="text-center flex flex-col justify-center">
+                                        <span className="text-base font-medium">{v.namaLatin}</span>
+                                        <small className={`text-[0.7rem] text-gray-200`}>Jumlah ayat : {v.jumlahAyat}</small>
+                                   </div> : <small>{v.namaLatin}</small>}
                                    {!v.error && <i className="bi bi-book text-xl"></i>}
                               </NavLink>
                          )) : <span className="text-gray-400 text-sm text-center p-2">
