@@ -1,15 +1,12 @@
 // ===== Imports ===== 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // ===== Code =====
 export default function Audios({ src }) {
-     // ===== Ref =====
+     // ===== States =====
      const refrences = useRef(null);
-
-     // ===== Play =====
      const [play, setPlay] = useState(false);
-
-     // ===== Duration & Current Time =====
+     const [ready, setReady] = useState(false);
      const [current, setCurrent] = useState(0);
      const [duration, setDuration] = useState(0);
 
@@ -52,6 +49,12 @@ export default function Audios({ src }) {
           const second = Math.floor(time % 60);
           return `${String(minutes).padStart(2, "0")}:${String(second).padStart(2, "0")}`
      }
+
+     useEffect(() => {
+          setPlay(false);
+          setCurrent(0);
+          setReady(false);
+     }, [src])
      return (
           <div>
                {/* ===== Audio Tag ===== */}
@@ -61,21 +64,25 @@ export default function Audios({ src }) {
                     onEnded={handleEnded}
                     onLoadedMetadata={handleDuration}
                     onTimeUpdate={handleCurrent}
+                    onCanPlay={() => setReady(true)}
                ></audio>
 
                {/* ===== Audio ===== */}
-               <div className="flex bg-gray-700/30 border-2 border-gray-400/10 w-full  max-w-3xl p-3  px-5 rounded-md items-center gap-3">
+               <div className={`flex ${ready ? `opacity-100` : `opacity-60`} bg-gray-800/90 border-2 border-gray-400/10 w-full  max-w-3xl p-3  px-5 rounded-md items-center gap-3`}>
                     <div className="">
                          {/* ===== Btn ===== */}
-                         <button onClick={handlePlay} className="bg-gray-900 cursor-pointer active:scale-95 duration-100 py-1 text-gray-200 px-2 rounded-full">
-                              <i className={`bi bi-${play ? `pause-fill` : `play-fill`} text-2xl`}></i>
+                         <button disabled={!ready} onClick={handlePlay} className="bg-gray-900 disabled:opacity-60 cursor-pointer active:scale-95 duration-100 py-1 text-gray-200 px-2 rounded-full">
+                              {ready ?
+                                   <i className={`bi bi-${play ? `pause-fill` : `play-fill`} text-2xl`}></i> :
+                                   <i className="bi bi-arrow-repeat cursor-not-allowed"></i>
+                              }
                          </button>
                     </div>
 
                     <div className="flex flex-1 flex-col">
                          {/* ===== Bar ===== */}
                          <div>
-                              <input onChange={handleChange} value={current} min={0} max={duration} className="w-full" type="range" />
+                              <input onChange={handleChange} value={current} min={0} max={duration} className={`${ready ? `cursor-grab` : `cursor-not-allowed`} w-full`} type="range" />
                          </div>
 
                          {/* ===== Time ===== */}

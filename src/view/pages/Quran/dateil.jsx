@@ -1,18 +1,20 @@
 // ===== Imports =====
 import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useOutletContext } from "react-router-dom"
 import Toggle from "../../components/toggle";
 import Audios from "../../components/audio";
 
 // ===== Code =====
 export default function DetailPage() {
-     // ===== Open =====
+     // ===== States =====
      const [open, setOpen] = useState({
           translate: true,
-          audio: false,
+          audio: true,
           teksLatin: true,
           description: false
      })
+
+     const { qori } = useOutletContext()
 
      // ===== Data loader =====
      const data = useLoaderData();
@@ -26,18 +28,19 @@ export default function DetailPage() {
      }
 
      useEffect(() => {
-          setDataSurah(data)
+          setDataSurah(data);
      }, [data])
      return (
           <>
                {/* ===== Toggle Switch ===== */}
-               <div className=" flex gap-3">
-                    <Toggle onclick={() => setOpen(prev => ({ ...prev, translate: !prev.translate }))} open={open.translate} icon={"translate"} />
-                    <Toggle onclick={() => setOpen(prev => ({ ...prev, audio: !prev.audio }))} open={open.audio} icon={"soundwave"} />
-                    <Toggle onclick={() => setOpen(prev => ({ ...prev, teksLatin: !prev.teksLatin }))} open={open.teksLatin} icon={"fonts"} />
-                    <Toggle onclick={() => setOpen(prev => ({ ...prev, description: !prev.description }))} open={open.description} icon={"journal-text"} />
+               <div className="flex justify-end ">
+                    <div className=" flex flex-end gap-3">
+                         <Toggle onclick={() => setOpen(prev => ({ ...prev, translate: !prev.translate }))} open={open.translate} icon={"translate"} />
+                         <Toggle onclick={() => setOpen(prev => ({ ...prev, audio: !prev.audio }))} open={open.audio} icon={"soundwave"} />
+                         <Toggle onclick={() => setOpen(prev => ({ ...prev, teksLatin: !prev.teksLatin }))} open={open.teksLatin} icon={"fonts"} />
+                         <Toggle onclick={() => setOpen(prev => ({ ...prev, description: !prev.description }))} open={open.description} icon={"journal-text"} />
+                    </div>
                </div>
-
 
                <div style={{ fontFamily: "Poppins" }} className="text-center flex flex-col gap-4 text-gray-200 text-xl">
                     {/* ===== Title ===== */}
@@ -53,13 +56,13 @@ export default function DetailPage() {
 
                {/* ===== Audio ===== */}
                <div>
-                    <Audios src={"https://cdn.equran.id/audio-full/Yasser-Al-Dosari/001.mp3"} />
+                    {open.audio && <Audios src={`${dataSurah.audioFull[qori.id]}`} />}
                </div>
 
                {/* ===== Detail Surah ===== */}
                {
                     dataSurah.ayat.map((v, i) => (
-                         <div key={i} className="bg-gray-700/30 gap-7 backdrop-blur-sm p-6 rounded-md text-gray-200 flex flex-col">
+                         <div key={i} className="bg-gray-700/30 gap-7 border-2 border-gray-400/10 backdrop-blur-sm p-6 rounded-md text-gray-200 flex flex-col">
                               {/* ====== Ayat ====== */}
                               <div className="flex justify-center gap-4">
                                    <span className="teks-arab text-end text-indigo-300 text-3xl">{Arabic(v.nomorAyat)}</span>
