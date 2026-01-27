@@ -37,7 +37,6 @@ const router = createBrowserRouter([
                },
                {
                     path: "waktu-sholat",
-                    loader: () => getProvinsi(`shalat/provinsi`),
                     element: <SholatPage />
                }
           ]

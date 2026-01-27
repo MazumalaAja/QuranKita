@@ -1,10 +1,10 @@
 // ===== Imports =====
 import { useEffect, useState } from "react";
 import Navbar from "../../components/navigations";
-import { useLoaderData } from "react-router-dom";
 import { post } from "../../../services/api";
 import Selects from "../../components/select"
 import Loading from "../../components/loader"
+import { getProvinsi } from "../../../services/cache";
 
 // ===== Navigation data =====
 const navigation = [
@@ -14,11 +14,8 @@ const navigation = [
 
 // ===== Code =====
 export default function SholatPage() {
-     // ===== Loader data =====
-     const loaderDataProvinsi = useLoaderData();
-
      // ===== Master Data =====
-     const [masterProvinsi, setMasterProvinsi] = useState(loaderDataProvinsi?.data || []);
+     const [masterProvinsi, setMasterProvinsi] = useState([]);
      const [masterKabkota, setMasterKabkota] = useState([]);
      const [masterShlat, setMasterShalat] = useState([]);
 
@@ -73,6 +70,19 @@ export default function SholatPage() {
                setListKabkota(filtered.length > 0 ? filtered : ["Tidak Tersedia"]);
           } else {
                setListKabkota(masterKabkota);
+          }
+     }
+
+     // ===== GetProvinsi API =====
+     async function getProvinsiApi() {
+          try {
+               setOpen(true)
+               const response = await getProvinsi("shalat/provinsi");
+               setMasterProvinsi(response.data);
+          } catch (err) {
+               console.error(err);
+          } finally {
+               setOpen(false)
           }
      }
 
@@ -131,11 +141,12 @@ export default function SholatPage() {
      }, [pick.kabkota, pick.bulan]);
 
      useEffect(() => {
-          if (loaderDataProvinsi?.data) {
-               setMasterProvinsi(loaderDataProvinsi.data);
-               setListProvinsi(loaderDataProvinsi.data);
-          }
-     }, [loaderDataProvinsi])
+          getProvinsiApi();
+     }, []);
+
+     useEffect(() => {
+          setListProvinsi(masterProvinsi);
+     }, [masterProvinsi]);
      return (
           <>
 
