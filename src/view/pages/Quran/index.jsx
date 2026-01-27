@@ -11,13 +11,14 @@ export default function QuranPage() {
      const [data, setData] = useState(surah);
      const { revalidate } = useRevalidator();
      const [open, setOpen] = useState({
-          qori: false
+          qori: false,
+          mobile: false,
      })
 
      // ===== Navigation data =====
      const navigation = [
           { label: "Al-Quran", icon: "journal", to: "/al-quran" },
-          { label: "Waktu Sholat", icon: "time", to: "/waktu-sholat" },
+          { label: "Waktu Sholat", icon: "clock", to: "/waktu-sholat" },
      ]
 
      // ====== Resource Ustadz =====
@@ -55,10 +56,10 @@ export default function QuranPage() {
      return (
           <>
                {/* ===== Navigation ===== */}
-               <Navbar data={navigation} />
+               <Navbar quran={true} onClick={() => setOpen(prev => ({ ...prev, mobile: !prev.mobile }))} mobile={open.mobile} data={navigation} />
 
                {/* ===== Qori ===== */}
-               {open.qori && <div className="fixed p-5 inset-0 z-999999 flex flex-col  gap-3 bg-gray-950/10 backdrop-blur-lg">
+               {open.qori && <div className="fixed p-5 inset-0 min-h-screen overflow-auto z-999999 flex flex-col  gap-3 bg-gray-950/10 backdrop-blur-lg">
                     <div>
                          <h1 className="text-2xl text-gray-200 text-center">List 6 Qori Terbaik</h1>
                     </div>
@@ -77,7 +78,7 @@ export default function QuranPage() {
                </div>}
 
                {/* ===== Sidebar ===== */}
-               <aside className="fixed left-0 overflow-scroll bottom-0 w-72 border-r-2 gap-1 flex flex-col p-2 border-gray-300/10 backdrop-blur-sm top-14 z-999">
+               <aside className={`fixed ${open.mobile ? `left-0` : `-left-full`} h-screen md:left-0 overflow-auto md:bottom-0 w-full md:w-72 border-r-2 gap-1 flex flex-col p-2 border-gray-300/10 duration-200 backdrop-blur-sm top-14 z-999`}>
                     <div className="mb-3">
                          <h2 className="text-xl text-gray-200 mb-2">Daftar Surah.</h2>
                          <Inputs onChange={handleChange} text={"Cari Surah..."} icon={"search"} iconStyle={`p-2 px-3 bg-gray-400/30`} />
@@ -105,9 +106,9 @@ export default function QuranPage() {
                     }
                </aside>
 
-               <main className="fixed top-14 right-0 overflow-scroll  border-0  w-[calc(100%-18rem)] bg-gray-950/50 backdrop-blur-sm">
+               <main className="fixed top-14 right-0 overflow-scroll  border-0 w-full md:w-[calc(100%-18rem)] bg-gray-950/50 backdrop-blur-sm">
                     {/* ===== Place ===== */}
-                    <div className="overflow-auto w-full h-screen p-4 pb-20 flex flex-col gap-3">
+                    <div className="overflow-auto w-full h-screen p-2 md:p-4 pb-20 flex flex-col gap-3">
                          <Outlet context={{ qori }} />
 
                          {/* ===== Footer ===== */}

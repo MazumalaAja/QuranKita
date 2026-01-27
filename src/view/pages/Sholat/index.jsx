@@ -9,7 +9,7 @@ import Loading from "../../components/loader"
 // ===== Navigation data =====
 const navigation = [
      { label: "Al-Quran", icon: "journal", to: "/al-quran" },
-     { label: "Waktu Sholat", icon: "time", to: "/waktu-sholat" },
+     { label: "Waktu Sholat", icon: "clock", to: "/waktu-sholat" },
 ];
 
 // ===== Code =====
@@ -139,21 +139,21 @@ export default function SholatPage() {
                {open && <Loading />}
 
                {/* ===== Main ===== */}
-               <main className="min-h-screen py-20 p-3 bg-gray-950/30">
+               <main className="min-h-screen md:py-14 p-1 md:p-3 bg-gray-950/30">
                     {/* ===== Title ===== */}
-                    <div className="mb-5 space-y-3 max-w-5xl mx-auto text-center">
-                         <div className="flex justify-center gap-3 text-4xl items-center">
+                    <div className="mb-5 space-y-3 max-w-5xl mx-auto text-center mt-20">
+                         <div className="flex justify-center gap-3 text-2xl md:text-4xl items-center">
                               <i className="bi bi-clock text-green-400"></i>
                               <h1 className="text-green-400">Jadwal Sholat.</h1>
                          </div>
 
                          <div className="space-y-3">
-                              <p className="text-gray-400">Lihat jadwal shalat harian untuk wilayah Anda. Pilih provinsi, kabupaten/kota, dan bulan untuk melihat jadwal lengkap.</p>
+                              <p className="text-gray-400 text-sm md:text-base">Lihat jadwal shalat harian untuk wilayah Anda. Pilih provinsi, kabupaten/kota, dan bulan untuk melihat jadwal lengkap.</p>
                          </div>
                     </div>
 
                     {/* ===== Selects ===== */}
-                    <div className="flex gap-2 justify-center mb-5">
+                    <div className="flex flex-wrap gap-2 justify-center mb-5">
                          {/* ===== Provinsi ===== */}
                          <Selects defaultValuex={true} icon={`map`} isReady={listProvinsi ? listProvinsi.length > 0 : false} value={pick.provinsi} onChange={HandleChange} onCLick={HandleClickProvinsi} data={listProvinsi} title={`Provinsi`} />
 
@@ -169,38 +169,38 @@ export default function SholatPage() {
                          <>
                               <div className="mb-3 max-w-5xl space-y-3 mx-auto flex flex-col justify-center">
                                    <div className="flex justify-center items-center gap-3">
-                                        <i className="bi bi-calendar text-gray-300 text-2xl"></i>
-                                        <h2 className="text-green-400 text-center text-2xl">Jadwal sholat hari ini</h2>
+                                        <i className="bi bi-calendar text-gray-300 text-md md:text-2xl"></i>
+                                        <h2 className="text-green-400 text-center text-lg md:text-2xl">Jadwal sholat hari ini</h2>
                                    </div>
                                    <div className="space-x-2 mx-auto">
                                         <span className="bg-indigo-600/10 text-center text-indigo-200 border-indigo-300/10 px-3 py-0.5 rounded-full border">{formatDay(new Date().getDay())} {new Date().getDay()} {formatMonth(new Date().getMonth())} {new Date().getFullYear()}</span>
                                    </div>
                               </div>
 
-                              <div className="bg-gray-950/50 backdrop-blur-md flex gap-3 max-w-5xl mx-auto p-3 mb-3 rounded-md">
+                              <div className="bg-gray-950/50 backdrop-blur-md flex flex-wrap gap-3 max-w-5xl mx-auto p-3 mb-3 rounded-md">
                                    <div className="bg-amber-400/10 flex-1 flex flex-col gap-1 p-1 px-3 rounded-md items-center">
                                         <small className="text-amber-50">Imsak</small>
-                                        <span className="text-amber-300 font-semibold text-2xl">{masterShlat[new Date().getDay()].imsak}</span>
+                                        <span className="text-amber-300 font-semibold text-xl md:text-2xl">{masterShlat[new Date().getDay()].imsak}</span>
                                    </div>
                                    <div className="bg-indigo-400/10 flex-1 flex flex-col gap-1 p-1 px-3 rounded-md items-center">
                                         <small className="text-indigo-50">Subuh</small>
-                                        <span className="text-indigo-300 font-semibold text-2xl">{masterShlat[new Date().getDay()].subuh}</span>
+                                        <span className="text-indigo-300 font-semibold text-xl md:text-2xl">{masterShlat[new Date().getDay()].subuh}</span>
                                    </div>
                                    <div className="bg-gray-400/10 flex-1 flex flex-col gap-1 p-1 px-3 rounded-md items-center">
                                         <small className="text-gray-50">Dzuhur</small>
-                                        <span className="text-gray-300 font-semibold text-2xl">{masterShlat[new Date().getDay()].dzuhur}</span>
+                                        <span className="text-gray-300 font-semibold text-xl md:text-2xl">{masterShlat[new Date().getDay()].dzuhur}</span>
                                    </div>
                                    <div className="bg-orange-400/10 flex-1 flex flex-col gap-1 p-1 px-3 rounded-md items-center">
                                         <small className="text-orange-50">Ashar</small>
-                                        <span className="text-orange-300 font-semibold text-2xl">{masterShlat[new Date().getDay()].ashar}</span>
+                                        <span className="text-orange-300 font-semibold text-xl md:text-2xl">{masterShlat[new Date().getDay()].ashar}</span>
                                    </div>
                                    <div className="bg-green-400/10 flex-1 flex flex-col gap-1 p-1 px-3 rounded-md items-center">
                                         <small className="text-green-50">Maghrib</small>
-                                        <span className="text-green-300 font-semibold text-2xl">{masterShlat[new Date().getDay()].maghrib}</span>
+                                        <span className="text-green-300 font-semibold text-xl md:text-2xl">{masterShlat[new Date().getDay()].maghrib}</span>
                                    </div>
                                    <div className="bg-indigo-600/10 flex-1 flex flex-col gap-1 p-1 px-3 rounded-md items-center">
                                         <small className="text-indigo-50">Isya</small>
-                                        <span className="text-indigo-300 font-semibold text-2xl">{masterShlat[new Date().getDay()].isya}</span>
+                                        <span className="text-indigo-300 font-semibold text-xl md:text-2xl">{masterShlat[new Date().getDay()].isya}</span>
                                    </div>
                               </div>
                          </>
@@ -210,7 +210,7 @@ export default function SholatPage() {
 
 
                     {/* ===== Title ===== */}
-                    {masterShlat.length > 0 && <div className="mb-3">
+                    {masterShlat.length > 0 && <div className="mb-3 text-sm md:text-base">
                          <h2 className="text-gray-400 text-center">Berikut merupakan jadwal sholat bulan <span className="text-indigo-400 font-semibold">{formatMonth(pick.bulan)}</span> di <span className="text-green-400 font-semibold">{pick.kabkota}</span> selama 1 bulan</h2>
                     </div>}
 

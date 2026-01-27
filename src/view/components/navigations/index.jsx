@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import "../../../assets/css/navbar.css"
 
 // ===== Code =====
-export default function Navbar({ data }) {
+export default function Navbar({ data, mobile, onClick, quran = false }) {
      // ===== States =====
      const [open, setOpen] = useState(false);
 
@@ -19,10 +19,17 @@ export default function Navbar({ data }) {
                          <h1>QuranKita.</h1>
                     </div>
 
-                    <div onClick={() => setOpen(!open)} className="flex cursor-pointer flex-col gap-1.5 md:hidden">
-                         <span className={`w-6 rounded-full duration-200 ${open ? `rotate-45 translate-y-2` : ``} bg-gray-300 h-[0.1rem]`}></span>
-                         <span className={`rounded-full duration-200 ${open ? `w-0` : `w-6`} bg-gray-300 h-[0.1rem]`}></span>
-                         <span className={`w-6 rounded-full duration-200 ${open ? `-rotate-45 -translate-y-2` : ``} bg-gray-300 h-[0.1rem]`}></span>
+                    <div className="md:hidden flex items-center gap-3">
+                         {/* ===== Quran Toggle ===== */}
+                         {quran && <div onClick={onClick} className="bg-gray-300 text-gray-800 px-2 p-1 active:scale-95 rounded-full cursor-pointer">
+                              <i className={`bi bi-${mobile ? `book` : `journal`}`}></i>
+                         </div>}
+
+                         <div onClick={() => setOpen(!open)} className="flex cursor-pointer flex-col gap-1.5 md:hidden">
+                              <span className={`w-6 rounded-full duration-200 ${open ? `rotate-45 translate-y-2` : ``} bg-gray-300 h-[0.1rem]`}></span>
+                              <span className={`rounded-full duration-200 ${open ? `w-0` : `w-6`} bg-gray-300 h-[0.1rem]`}></span>
+                              <span className={`w-6 rounded-full duration-200 ${open ? `-rotate-45 -translate-y-2` : ``} bg-gray-300 h-[0.1rem]`}></span>
+                         </div>
                     </div>
                </div>
 
